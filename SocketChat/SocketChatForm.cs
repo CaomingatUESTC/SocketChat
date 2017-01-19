@@ -102,8 +102,13 @@ namespace SocketChat
                             else
                                 rcvMsgTextBox.SelectionColor = Color.BlueViolet;
 
+                            System.Media.SoundPlayer souderPlayer = new System.Media.SoundPlayer(Properties.Resources.msg);
+                            souderPlayer.Play();        
+
                             rcvMsgTextBox.AppendText(serverRcvMsg);
                             rcvMsgTextBox.AppendText("\n");
+
+                
                         });
                     }
                 }
@@ -177,7 +182,11 @@ namespace SocketChat
                         if (clientRcvMsg[0] == ' ')
                             rcvMsgTextBox.SelectionColor = Color.Black;
                         else
-                            rcvMsgTextBox.SelectionColor = Color.BlueViolet; 
+                            rcvMsgTextBox.SelectionColor = Color.BlueViolet;
+
+                        System.Media.SoundPlayer souderPlayer = new System.Media.SoundPlayer(Properties.Resources.msg);
+                        souderPlayer.Play();
+
                         rcvMsgTextBox.AppendText(clientRcvMsg);
                         rcvMsgTextBox.AppendText("\n");
                     });

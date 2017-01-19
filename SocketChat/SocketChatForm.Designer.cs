@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SocketChatForm));
             this.CnIPStringLabel = new System.Windows.Forms.Label();
             this.IPStringLabel = new System.Windows.Forms.Label();
             this.cnSocketLabel = new System.Windows.Forms.Label();
@@ -349,6 +350,7 @@
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "SocketChatForm";

@@ -20,6 +20,11 @@ namespace SocketChat
         {
             this.Close();
         }
+
+        private void HelpForm_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 
     public partial class SocketChatForm : Form
