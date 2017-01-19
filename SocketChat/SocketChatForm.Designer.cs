@@ -35,31 +35,35 @@
             this.createServerButton = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.msgPage = new System.Windows.Forms.TabPage();
+            this.rcvMsgTextBox = new System.Windows.Forms.RichTextBox();
             this.sendButton = new System.Windows.Forms.Button();
             this.sendTextBox = new System.Windows.Forms.TextBox();
-            this.rcvMsgTextBox = new System.Windows.Forms.TextBox();
             this.createComPage = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cnlabel = new System.Windows.Forms.Label();
             this.clientGroupBox = new System.Windows.Forms.GroupBox();
+            this.IPServerComboBox = new System.Windows.Forms.ComboBox();
             this.clientNickNameTextBox = new System.Windows.Forms.TextBox();
             this.cnclientNickNameLabel = new System.Windows.Forms.Label();
             this.createClientButton = new System.Windows.Forms.Button();
             this.serverSocketPortTextBox = new System.Windows.Forms.TextBox();
             this.cnServerSocketLabel = new System.Windows.Forms.Label();
-            this.IPServerTextBox = new System.Windows.Forms.TextBox();
             this.cnIPServeLabel = new System.Windows.Forms.Label();
             this.ServerGroupBox = new System.Windows.Forms.GroupBox();
             this.serverNickNameTextBox = new System.Windows.Forms.TextBox();
             this.cnServerNickNameLabel = new System.Windows.Forms.Label();
             this.serverBgWorker = new System.ComponentModel.BackgroundWorker();
             this.clientBgWorker = new System.ComponentModel.BackgroundWorker();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.authorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl.SuspendLayout();
             this.msgPage.SuspendLayout();
             this.createComPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.clientGroupBox.SuspendLayout();
             this.ServerGroupBox.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // CnIPStringLabel
@@ -111,7 +115,7 @@
             // 
             this.tabControl.Controls.Add(this.msgPage);
             this.tabControl.Controls.Add(this.createComPage);
-            this.tabControl.Location = new System.Drawing.Point(15, 12);
+            this.tabControl.Location = new System.Drawing.Point(15, 28);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(520, 425);
@@ -120,9 +124,9 @@
             // 
             // msgPage
             // 
+            this.msgPage.Controls.Add(this.rcvMsgTextBox);
             this.msgPage.Controls.Add(this.sendButton);
             this.msgPage.Controls.Add(this.sendTextBox);
-            this.msgPage.Controls.Add(this.rcvMsgTextBox);
             this.msgPage.Location = new System.Drawing.Point(4, 22);
             this.msgPage.Name = "msgPage";
             this.msgPage.Padding = new System.Windows.Forms.Padding(3);
@@ -130,6 +134,16 @@
             this.msgPage.TabIndex = 1;
             this.msgPage.Text = "发送消息";
             this.msgPage.UseVisualStyleBackColor = true;
+            // 
+            // rcvMsgTextBox
+            // 
+            this.rcvMsgTextBox.Location = new System.Drawing.Point(17, 6);
+            this.rcvMsgTextBox.Name = "rcvMsgTextBox";
+            this.rcvMsgTextBox.ReadOnly = true;
+            this.rcvMsgTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rcvMsgTextBox.Size = new System.Drawing.Size(476, 280);
+            this.rcvMsgTextBox.TabIndex = 3;
+            this.rcvMsgTextBox.Text = "";
             // 
             // sendButton
             // 
@@ -149,16 +163,6 @@
             this.sendTextBox.Size = new System.Drawing.Size(348, 82);
             this.sendTextBox.TabIndex = 1;
             this.sendTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.sendTextBox_KeyPress);
-            // 
-            // rcvMsgTextBox
-            // 
-            this.rcvMsgTextBox.Location = new System.Drawing.Point(17, 16);
-            this.rcvMsgTextBox.Multiline = true;
-            this.rcvMsgTextBox.Name = "rcvMsgTextBox";
-            this.rcvMsgTextBox.ReadOnly = true;
-            this.rcvMsgTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.rcvMsgTextBox.Size = new System.Drawing.Size(476, 258);
-            this.rcvMsgTextBox.TabIndex = 0;
             // 
             // createComPage
             // 
@@ -194,12 +198,12 @@
             // 
             // clientGroupBox
             // 
+            this.clientGroupBox.Controls.Add(this.IPServerComboBox);
             this.clientGroupBox.Controls.Add(this.clientNickNameTextBox);
             this.clientGroupBox.Controls.Add(this.cnclientNickNameLabel);
             this.clientGroupBox.Controls.Add(this.createClientButton);
             this.clientGroupBox.Controls.Add(this.serverSocketPortTextBox);
             this.clientGroupBox.Controls.Add(this.cnServerSocketLabel);
-            this.clientGroupBox.Controls.Add(this.IPServerTextBox);
             this.clientGroupBox.Controls.Add(this.cnIPServeLabel);
             this.clientGroupBox.Location = new System.Drawing.Point(7, 147);
             this.clientGroupBox.Name = "clientGroupBox";
@@ -207,6 +211,18 @@
             this.clientGroupBox.TabIndex = 6;
             this.clientGroupBox.TabStop = false;
             this.clientGroupBox.Text = "加入聊天";
+            // 
+            // IPServerComboBox
+            // 
+            this.IPServerComboBox.FormattingEnabled = true;
+            this.IPServerComboBox.Items.AddRange(new object[] {
+            "192.168.31.211",
+            "192.168.31.140"});
+            this.IPServerComboBox.Location = new System.Drawing.Point(72, 33);
+            this.IPServerComboBox.Name = "IPServerComboBox";
+            this.IPServerComboBox.Size = new System.Drawing.Size(116, 20);
+            this.IPServerComboBox.TabIndex = 8;
+            this.IPServerComboBox.Text = "192.168.31.211";
             // 
             // clientNickNameTextBox
             // 
@@ -226,7 +242,7 @@
             // 
             // createClientButton
             // 
-            this.createClientButton.Location = new System.Drawing.Point(176, 59);
+            this.createClientButton.Location = new System.Drawing.Point(176, 70);
             this.createClientButton.Name = "createClientButton";
             this.createClientButton.Size = new System.Drawing.Size(75, 23);
             this.createClientButton.TabIndex = 4;
@@ -250,14 +266,6 @@
             this.cnServerSocketLabel.Size = new System.Drawing.Size(35, 12);
             this.cnServerSocketLabel.TabIndex = 2;
             this.cnServerSocketLabel.Text = "房号:";
-            // 
-            // IPServerTextBox
-            // 
-            this.IPServerTextBox.Location = new System.Drawing.Point(72, 32);
-            this.IPServerTextBox.Name = "IPServerTextBox";
-            this.IPServerTextBox.Size = new System.Drawing.Size(79, 21);
-            this.IPServerTextBox.TabIndex = 1;
-            this.IPServerTextBox.Text = "127.0.0.1";
             // 
             // cnIPServeLabel
             // 
@@ -308,14 +316,43 @@
             // 
             this.clientBgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.clientBgWorker_DoWork);
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem,
+            this.authorToolStripMenuItem1});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(547, 25);
+            this.menuStrip.TabIndex = 6;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.helpToolStripMenuItem.Text = "使用帮助";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
+            // authorToolStripMenuItem1
+            // 
+            this.authorToolStripMenuItem1.Name = "authorToolStripMenuItem1";
+            this.authorToolStripMenuItem1.Size = new System.Drawing.Size(68, 21);
+            this.authorToolStripMenuItem1.Text = "关于作者";
+            this.authorToolStripMenuItem1.Click += new System.EventHandler(this.authorToolStripMenuItem1_Click);
+            // 
             // SocketChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 449);
+            this.ClientSize = new System.Drawing.Size(547, 464);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.menuStrip);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip;
+            this.MaximizeBox = false;
             this.Name = "SocketChatForm";
-            this.Text = "SocketChat-V1.0";
+            this.Text = "SocketChat";
             this.Load += new System.EventHandler(this.SocketChatForm_Load);
             this.tabControl.ResumeLayout(false);
             this.msgPage.ResumeLayout(false);
@@ -327,7 +364,10 @@
             this.clientGroupBox.PerformLayout();
             this.ServerGroupBox.ResumeLayout(false);
             this.ServerGroupBox.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -345,10 +385,8 @@
         private System.ComponentModel.BackgroundWorker serverBgWorker;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.TextBox sendTextBox;
-        private System.Windows.Forms.TextBox rcvMsgTextBox;
         private System.Windows.Forms.GroupBox clientGroupBox;
         private System.Windows.Forms.Label cnServerSocketLabel;
-        private System.Windows.Forms.TextBox IPServerTextBox;
         private System.Windows.Forms.Label cnIPServeLabel;
         private System.Windows.Forms.TextBox serverSocketPortTextBox;
         private System.Windows.Forms.Button createClientButton;
@@ -359,6 +397,11 @@
         private System.Windows.Forms.Label cnclientNickNameLabel;
         private System.Windows.Forms.TextBox serverNickNameTextBox;
         private System.Windows.Forms.Label cnServerNickNameLabel;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem authorToolStripMenuItem1;
+        private System.Windows.Forms.RichTextBox rcvMsgTextBox;
+        private System.Windows.Forms.ComboBox IPServerComboBox;
     }
 }
 

@@ -76,6 +76,8 @@ namespace SocketChat
                 nickName = ipString;
             }
 
+            this.Text += "-成功新建聊天！";
+
             serverBgWorker.RunWorkerAsync();
         }
 
@@ -87,25 +89,20 @@ namespace SocketChat
                 try
                 {
                     //通过clientSocket接收数据
-                    int receiveNumber = clientOfServerSocket.Receive(serverRcvMsgByte);
+                    int receiveLength = clientOfServerSocket.Receive(serverRcvMsgByte);
 
                     //如果接收到了数据
-                    if (receiveNumber > 0)
+                    if (receiveLength > 0)
                     {
-                        ////更新指示灯图片的状态
-                        //if (!rcvTimer.Enabled)
-                        //{
-                        //    Invoke((MethodInvoker)delegate
-                        //    {
-                        //        rcvPicture.BackgroundImage = Properties.Resources.greenlight;
-                        //        rcvTimer.Start();
-                        //    });
-                        //}
-
                         Invoke((MethodInvoker)delegate
                         {
-                            string rcvString = Encoding.Unicode.GetString(serverRcvMsgByte);
-                            rcvMsgTextBox.AppendText(rcvString);
+                            string serverRcvMsg = Encoding.Unicode.GetString(serverRcvMsgByte, 0, receiveLength);
+                            if (serverRcvMsg[0] == ' ')
+                                rcvMsgTextBox.SelectionColor = Color.Black;
+                            else
+                                rcvMsgTextBox.SelectionColor = Color.BlueViolet;
+
+                            rcvMsgTextBox.AppendText(serverRcvMsg);
                             rcvMsgTextBox.AppendText("\n");
                         });
                     }
@@ -124,12 +121,12 @@ namespace SocketChat
         {
             if(tabControl.SelectedTab == createComPage)
             {
-                this.Size = new Size(347, 488);
+                this.Size = new Size(347, 503);
                 tabControl.Size = new Size(307, 425);
             }
             else if(tabControl.SelectedTab == msgPage)
             {
-                this.Size = new Size(563, 488);
+                this.Size = new Size(563, 503);
                 tabControl.Size = new Size(520, 425); 
             }
         }
@@ -137,7 +134,7 @@ namespace SocketChat
         private void createClientButton_Click(object sender, EventArgs e)
         {
             // 设定服务器ip地址
-            IPAddress ip = IPAddress.Parse(IPServerTextBox.Text);
+            IPAddress ip = IPAddress.Parse(IPServerComboBox.Text);
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -162,6 +159,7 @@ namespace SocketChat
                 nickName = ipString;
             }
 
+            this.Text += "--成功加入聊天！";
 
             clientBgWorker.RunWorkerAsync();
         }
@@ -172,11 +170,18 @@ namespace SocketChat
             {
                 int receiveLength = clientSocket.Receive(clientRcvMsgByte);
                 if (receiveLength > 0)
+                {
                     Invoke((MethodInvoker)delegate
                     {
-                        rcvMsgTextBox.AppendText(Encoding.Unicode.GetString(clientRcvMsgByte, 0, receiveLength));
+                        string clientRcvMsg = Encoding.Unicode.GetString(clientRcvMsgByte, 0, receiveLength);
+                        if (clientRcvMsg[0] == ' ')
+                            rcvMsgTextBox.SelectionColor = Color.Black;
+                        else
+                            rcvMsgTextBox.SelectionColor = Color.BlueViolet; 
+                        rcvMsgTextBox.AppendText(clientRcvMsg);
                         rcvMsgTextBox.AppendText("\n");
                     });
+                }
             }
         }
 
@@ -188,35 +193,30 @@ namespace SocketChat
 
         private void sendMessage()
         {
+            int endPointIndex = rcvMsgTextBox.Text.Length;
+
+            string senderInformation = nickName + "    " + DateTime.Now;
+            string senderText = "    " + sendTextBox.Text;
+            string sendMsg = senderInformation + "\r\n" + senderText + '\0';
+
             if (isServer && !isClient)
-            {
-                string sendMsg = nickName + "\r\n" + "    " + sendTextBox.Text + '\0';
+            {          
                 try
                 {
-                    clientOfServerSocket.Send(Encoding.Unicode.GetBytes(sendMsg), SocketFlags.None);
-                    rcvMsgTextBox.AppendText(sendMsg);
-                    rcvMsgTextBox.AppendText("\n");
-                    serverRcvMsgByte.Initialize();
-                    sendTextBox.Clear();
+                    clientOfServerSocket.Send(Encoding.Unicode.GetBytes(senderInformation), SocketFlags.None);
+                    clientOfServerSocket.Send(Encoding.Unicode.GetBytes(senderText), SocketFlags.None);
                 }
                 catch
                 {
-                    clientOfServerSocket.Shutdown(SocketShutdown.Both);
-                    clientOfServerSocket.Close();
-                    MessageBox.Show("发送失败!");
+                    MessageBox.Show("发送失败!请确保已有用户连接！", "错误");
                 }
             }
             else if (isClient && !isServer)
             {
-                string sendMsg = nickName + "\r\n" + "    " + sendTextBox.Text + '\0';
                 try
                 {
-
-                    clientSocket.Send(Encoding.Unicode.GetBytes(sendMsg), SocketFlags.None);
-                    rcvMsgTextBox.AppendText(sendMsg);
-                    rcvMsgTextBox.AppendText("\n");
-                    clientRcvMsgByte.Initialize();
-                    sendTextBox.Clear();
+                    clientSocket.Send(Encoding.Unicode.GetBytes(senderInformation), SocketFlags.None);
+                    clientSocket.Send(Encoding.Unicode.GetBytes(senderText), SocketFlags.None);
                 }
                 catch
                 {
@@ -225,9 +225,21 @@ namespace SocketChat
                     MessageBox.Show("发送失败!");
                 }
             }
+
+            if(isClient || isServer)
+            {
+                rcvMsgTextBox.SelectionColor = Color.ForestGreen;
+                rcvMsgTextBox.AppendText (senderInformation);
+                rcvMsgTextBox.AppendText("\r\n");
+                rcvMsgTextBox.SelectionColor = Color.Black;
+                rcvMsgTextBox.AppendText(senderText);
+                rcvMsgTextBox.AppendText("\r\n");
+                sendTextBox.Clear();
+            }
+
             else if (!isServer && !isClient)
             {
-                MessageBox.Show("请先建立连接！");
+                MessageBox.Show("请先建立连接！", "错误");
             }
         }
 
